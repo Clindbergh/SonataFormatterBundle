@@ -179,3 +179,21 @@ Then, update the ``sonata_admin`` configuration to use this template:
         templates:
             # default global templates
             layout:  SonataAdminBundle::layout.html.twig
+
+Use this snippet inside your ``configureFormFields(FormMapper $formMapper)`` method to use the widget:
+
+.. code-block:: php
+
+    <?php
+
+    $formMapper
+        ->add('content', 'sonata_formatter_type', array(
+            'event_dispatcher' => $formMapper->getFormBuilder()->getEventDispatcher(),
+            'format_field'   => 'contentFormatter',
+            'source_field'   => 'rawContent',
+            'source_field_options'      => array(
+                'attr' => array('class' => 'span10', 'rows' => 20)
+            ),
+            'listener'       => true,
+            'target_field'   => 'content'
+        ))
